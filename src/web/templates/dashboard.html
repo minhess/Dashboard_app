@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Dashboard App{% endblock %}
+
+{% block content %}
+  <h1>Dashboard</h1>
+  <section>
+    <h2>Stats</h2>
+    <ul>
+      <li>Count: <span id="stat-count">{{ stats.count }}</span></li>
+      <li>Mean: <span id="stat-mean">{{ stats.mean }}</span></li>
+      <li>Max: <span id="stat-max">{{ stats.max }}</span></li>
+      <li>Min: <span id="stat-min">{{ stats.min }}</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Metrics</h2>
+    <div class="chart-container" style="max-width:720px; background:#fff; padding:1rem; border:1px solid #eee">
+      <canvas id="metrics-chart" width="720" height="320"></canvas>
+    </div>
+    <table style="margin-top:1rem">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+      {% for r in records %}
+        <tr><td>{{ r.metric }}</td><td>{{ r.value }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Create item</h2>
+    <form id="item-form">
+      <label>Name: <input type="text" name="name" required></label>
+      <label>Value: <input type="number" step="any" name="value"></label>
+      <button type="submit">Add</button>
+    </form>
+
+    <h3>Items (live)</h3>
+    <ul id="items-list">
+      <!-- existing items will be loaded by client JS -->
+    </ul>
+  </section>
+
+  <!-- Chart.js (frontend charting library) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js" integrity="sha512-+Q0x0..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

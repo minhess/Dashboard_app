@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dashboard-app"
+authors = [
+    { name = "Minh", email = "minh@example.com" }
+]
+version = "0.1.0"
+description = "Simple dashboard Flask app"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "flask",
+  "numpy",
+  "pandas",
+  "flask-socketio",
+  "eventlet",
+  "pytest",
+  "python-socketio",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

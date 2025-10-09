@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Dashboard App{% endblock %}
+
+{% block content %}
+  <h1>Welcome to the Dashboard App</h1>
+  <p>This is a simple dynamic website powered by Flask. Visit the <a href="{{ url_for('dashboard') }}">dashboard</a> to see generated metrics.</p>
+  <section>
+    <h2>Quick API</h2>
+    <p>Try the data API: <a href="{{ url_for('api_data') }}">/api/data</a></p>
+    <p>List items: <a href="{{ url_for('api_items') }}">/api/items</a></p>
+  </section>
+{% endblock %}

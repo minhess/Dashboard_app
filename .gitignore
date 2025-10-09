@@ -1,0 +1,6 @@
+__pycache__
+.pytest_cache
+.flask
+*.egg-info
+favicon_io
+
