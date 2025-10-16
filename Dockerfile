@@ -4,7 +4,7 @@ FROM python:3.12-slim
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    FLASK_APP=src.web.app
+    FLASK_APP=src.app:create_app("local")
 
 # Set work directory
 WORKDIR /app
@@ -20,4 +20,4 @@ RUN pip install --upgrade pip && \
 EXPOSE 5000
 
 # Run the Flask app
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask", "run"]

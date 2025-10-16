@@ -1,0 +1,8 @@
+flask
+numpy
+pandas
+flask-socketio
+eventlet
+pytest
+python-socketio
+python-dotenv
