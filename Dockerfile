@@ -4,7 +4,7 @@ FROM python:3.12-slim
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    FLASK_APP=src.app:create_app("local")
+    FLASK_APP=src.app
 
 # Set work directory
 WORKDIR /app
