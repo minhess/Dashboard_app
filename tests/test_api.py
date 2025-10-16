@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture
 def client():
-    from src.web.app import app
+    from dashboard.views import app
 
     app.config["TESTING"] = True
     with app.test_client() as client:

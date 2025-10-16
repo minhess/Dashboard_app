@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Dashboard App{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('dashboard.static', filename='favicon.ico') }}">
   </head>
   <body>
     <header>
       <nav>
-        <a href="{{ url_for('index') }}">Home</a> |
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('dashboard.index') }}">Home</a> |
+        <a href="{{ url_for('dashboard.show') }}">Dashboard</a>
       </nav>
     </header>
     <main>

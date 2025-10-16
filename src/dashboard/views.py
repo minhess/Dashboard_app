@@ -1,16 +1,29 @@
-from flask import Flask, render_template, jsonify, request, url_for, send_from_directory
+from flask import (
+    Blueprint,
+    render_template,
+    jsonify,
+    request,
+    url_for,
+    send_from_directory,
+)
 import pandas as pd
 import numpy as np
-from flask_socketio import SocketIO
+from src.app import socketio
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
-app.config["SECRET_KEY"] = "dev-secret"
-socketio = SocketIO(app, cors_allowed_origins="*")
+
+dsb = Blueprint(
+    "dashboard",
+    __name__,
+    static_folder="static",
+    template_folder="templates",
+)
+
 
 # Simple in-memory store for demo purposes
 items = [
     {"id": 1, "name": "Temperature", "value": 23.4},
     {"id": 2, "name": "Humidity", "value": 56.1},
+    {"id": 3, "name": "FU", "value": 100},
 ]
 
 # Background metric emitter control
@@ -18,18 +31,13 @@ thread = None
 thread_stop_event = False
 
 
-@app.route("/favicon.ico")
-def favicon():
-    return send_from_directory(app.static_folder, "favicon.ico")
-
-
-@app.route("/")
+@dsb.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("dashboard/index.html")
 
 
-@app.route("/dashboard")
-def dashboard():
+@dsb.route("/show")
+def show():
     # generate a small sample dataset using pandas / numpy
     df = pd.DataFrame(
         {
@@ -44,10 +52,10 @@ def dashboard():
         "min": int(df["value"].min()),
     }
     records = df.to_dict(orient="records")
-    return render_template("dashboard.html", records=records, stats=stats)
+    return render_template("dashboard/show.html", records=records, stats=stats)
 
 
-@app.route("/api/data")
+@dsb.route("/api/data")
 def api_data():
     df = pd.DataFrame(
         {
@@ -58,7 +66,7 @@ def api_data():
     return jsonify(df.to_dict(orient="records"))
 
 
-@app.route("/api/items", methods=["GET", "POST"])
+@dsb.route("/api/items", methods=["GET", "POST"])
 def api_items():
     if request.method == "GET":
         return jsonify(items)
@@ -101,9 +109,3 @@ def on_connect():
     # start background thread once
     if thread is None:
         thread = socketio.start_background_task(background_metrics)
-
-
-if __name__ == "__main__":
-    # For local development with Socket.IO support use socketio.run
-    # eventlet or gevent is recommended for production; eventlet works well locally
-    socketio.run(app, debug=True, host="127.0.0.1", port=5000)

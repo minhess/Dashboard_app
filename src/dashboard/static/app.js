@@ -11,7 +11,7 @@
 
   async function loadItems() {
     try {
-      const res = await fetch('/api/items');
+      const res = await fetch('api/items');
       const data = await res.json();
       itemsList.innerHTML = '';
       data.forEach(i => itemsList.appendChild(renderItem(i)));
@@ -28,7 +28,7 @@
       value: formData.get('value') ? Number(formData.get('value')) : null,
     };
     try {
-      const res = await fetch('/api/items', {
+      const res = await fetch('api/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -115,7 +115,7 @@
   // load initial chart data from /api/data
   (async function loadInitialChart() {
     try {
-      const res = await fetch('/api/data');
+      const res = await fetch('api/data');
       const data = await res.json();
       updateChart(data);
       updateStats(data);
@@ -133,7 +133,12 @@
     const min = Math.min(...values);
     const setText = (id, v) => {
       const el = document.getElementById(id);
-      if (el) el.textContent = typeof v === 'number' ? v.toFixed(2) : v;
+      if (el) {
+        // If it's an integer, show it clean; if float, show 2 decimals
+        const display =
+          Number.isInteger(v) ? v : v.toFixed(2);
+        el.textContent = display;
+      }
     };
     setText('stat-count', count);
     setText('stat-mean', mean);

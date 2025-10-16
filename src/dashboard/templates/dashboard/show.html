@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard/base.html' %}
 
 {% block title %}Dashboard - Dashboard App{% endblock %}
 
@@ -48,5 +48,5 @@
   <!-- Chart.js (frontend charting library) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js" integrity="sha512-+Q0x0..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="{{ url_for('dashboard.static', filename='app.js') }}"></script>
 {% endblock %}
