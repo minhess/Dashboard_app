@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_socketio import SocketIO
 
 from src.config import config
@@ -16,6 +16,11 @@ def create_app(config_key):
     from src.dashboard import views as dashboard_views
 
     app.register_blueprint(dashboard_views.dsb, url_prefix="/dashboard")
+
+    # Root index route
+    @app.route("/")
+    def index():
+        return render_template("index.html")
 
     socketio.init_app(app)
 

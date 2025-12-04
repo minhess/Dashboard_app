@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Dashboard App{% endblock %}
+
+{% block content %}
+  <h1>Welcome to Dashboard App</h1>
+  <p>Select a feature from the navigation menu above:</p>
+  <ul>
+    <li><a href="{{ url_for('dashboard.show') }}">Dashboard</a> - View metrics and real-time data</li>
+  </ul>
+{% endblock %}
