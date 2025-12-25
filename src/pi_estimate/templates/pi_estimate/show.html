@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Pi Estimation - Dashboard App{% endblock %}
+
+{% block content %}
+  <style>
+    /* Balanced, responsive two-column layout */
+    #containers { display: flex; gap: 16px; align-items: flex-start; flex-wrap: nowrap; }
+    /* #left, #right { flex: 1 1 0; min-width: 280px; background: #fff; padding: 8px; border: 1px solid #ddd; box-sizing: border-box; } */
+    #left { flex: 4; }
+    #right { flex: 6; }
+    /* Keep scatter square while filling column width */
+    #left canvas { width: 75% !important; height: auto !important; aspect-ratio: 1 / 1; display: block; }
+    /* Chart should fill right column */
+    #right canvas { width: 100% !important; height: auto !important; max-height: 350px; display: block; }
+    canvas { background: #f8f8f8; }
+    #stats { margin-top: 8px; }
+    @media (max-width: 900px) {
+      #containers { flex-direction: column; }
+      #right canvas { height: 40vh; }
+    }
+  </style>
+  <h2>Pi Estimation — Monte Carlo (live)</h2>
+  <div id="containers">
+    <div id="left">
+      <h4>Circle in square (points)</h4>
+      <canvas id="scatter" width="400" height="400"></canvas>
+      <div id="stats">
+        <div>Points: <span id="total">0</span></div>
+        <div>Inside: <span id="inside">0</span></div>
+        <div>Estimated π: <span id="pi">0</span></div>
+        <div>Error: <span id="error">0</span></div>
+      </div>
+      <div id="controls" style="margin-top:8px;">
+        <button id="pause-btn" style="margin-right:8px;">Pause</button>
+         <button id="continue-btn" disabled style="margin-right:8px;">Continue</button>
+         <button id="restart-btn">Restart</button>
+      </div>
+    </div>
+
+    <div id="right">
+      <h4>π estimate over time</h4>
+      <canvas id="chart" width="600" height="400"></canvas>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js" integrity="sha512-+Q0x0..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{{ url_for('pi_estimate.static', filename='app.js') }}"></script>
+</body>
+{% endblock %}

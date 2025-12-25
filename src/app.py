@@ -14,8 +14,10 @@ def create_app(config_key):
     app.config.from_object(config[config_key])
 
     from src.dashboard import views as dashboard_views
+    from src.pi_estimate import views as pi_views
 
     app.register_blueprint(dashboard_views.dsb, url_prefix="/dashboard")
+    app.register_blueprint(pi_views.pi_est, url_prefix="/pi")
 
     # Root index route
     @app.route("/")
